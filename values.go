@@ -3,11 +3,18 @@ package timeago
 type DateAgoValues int
 
 const (
-	SecondsAgo DateAgoValues = iota
+	JustNow DateAgoValues = iota
+	SecondsAgo
+	LastMinute
 	MinutesAgo
+	LastHour
 	HoursAgo
+	LastDay
 	DaysAgo
+	LastWeek
 	WeeksAgo
+	LastMonth
 	MonthsAgo
+	LastYear
 	YearsAgo
 )

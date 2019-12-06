@@ -24,7 +24,7 @@ func TestThreeHoursAgo(t *testing.T) {
 }
 
 func TestAnHourAgo(t *testing.T) {
-	d, err := time.ParseDuration("-1.5h")
+	d, err := time.ParseDuration("-1.4h")
 	if err == nil {
 		check(t, d, "An hour ago")
 	}

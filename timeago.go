@@ -3,29 +3,16 @@
 package timeago
 
 import (
-	"time"
-  "fmt"
-  "math"
 	"errors"
-)
-
-type DateAgoValues int
-
-const (
-    SecondsAgo DateAgoValues = iota
-    MinutesAgo
-    HoursAgo
-    DaysAgo
-    WeeksAgo
-    MonthsAgo
-    YearsAgo
+	"fmt"
+	"math"
+	"time"
 )
 
 // TimeAgoFromNowWithTime takes a specific end Time value
 // and the current Time to return how much has been passed
 // between them.
 func TimeAgoFromNowWithTime(end time.Time) (string, error) {
-
 	return TimeAgoWithTime(time.Now(), end)
 }
 
@@ -34,7 +21,6 @@ func TimeAgoFromNowWithTime(end time.Time) (string, error) {
 // how much time has been passed between the current time and
 // the string representation of the time provided by user.
 func TimeAgoFromNowWithString(layout, end string) (string, error) {
-
 	t, e := time.Parse(layout, end)
 	if e == nil {
 		return TimeAgoWithTime(time.Now(), t)
@@ -55,7 +41,6 @@ func TimeAgoWithTime(start, end time.Time) (string, error) {
 // format to parse the time string on start/end parameter to return
 // how much time has been passed between them.
 func TimeAgoWithString(layout, start, end string) (string, error) {
-
 	timeStart, e := time.Parse(layout, start)
 	if e != nil {
 		err := errors.New("Invalid start time format")
@@ -75,78 +60,77 @@ func TimeAgoWithString(layout, start, end string) (string, error) {
 func stringForDuration(duration time.Duration) string {
 	if duration.Hours() < 24 {
 		if duration.Hours() >= 1 {
-			return localizedStringFor(HoursAgo, int(round(duration.Hours())));
+			return localizedStringFor(HoursAgo, int(round(duration.Hours())))
 		} else if duration.Minutes() >= 1 {
-			return localizedStringFor(MinutesAgo, int(round(duration.Minutes())));
+			return localizedStringFor(MinutesAgo, int(round(duration.Minutes())))
 		} else {
-			return localizedStringFor(SecondsAgo, int(round(duration.Seconds())));
+			return localizedStringFor(SecondsAgo, int(round(duration.Seconds())))
 		}
 	} else {
 		if duration.Hours() >= 8760 {
 			years := duration.Hours() / 8760
-			return localizedStringFor(YearsAgo, int(years));
+			return localizedStringFor(YearsAgo, int(years))
 		} else if duration.Hours() >= 730 {
 			months := duration.Hours() / 730
-			return localizedStringFor(MonthsAgo, int(months));
+			return localizedStringFor(MonthsAgo, int(months))
 		} else if duration.Hours() >= 168 {
 			weeks := duration.Hours() / 168
-			return localizedStringFor(WeeksAgo, int(weeks));
+			return localizedStringFor(WeeksAgo, int(weeks))
 		} else {
 			days := duration.Hours() / 24
-			return localizedStringFor(DaysAgo, int(days));
+			return localizedStringFor(DaysAgo, int(days))
 		}
 	}
 }
 
 func round(f float64) float64 {
-    return math.Floor(f + .5)
+	return math.Floor(f + .5)
 }
 
 func localizedStringFor(valueType DateAgoValues, value int) string {
-
-    switch valueType {
-        case YearsAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d years ago", value);
-            } else {
-                return "Last year";
-            }
-        case MonthsAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d months ago", value);
-            } else {
-                return "Last month";
-            }
-        case WeeksAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d weeks ago", value);
-            } else {
-                return "Last week";
-            }
-        case DaysAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d days ago", value);
-            } else {
-                return "Yesterday";
-            }
-        case HoursAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d hours ago", value);
-            } else {
-                return "An hour ago";
-            }
-        case MinutesAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d minutes ago", value);
-            } else {
-                return "A minute ago";
-            }
-        case SecondsAgo:
-            if value >= 2 {
-                return fmt.Sprintf("%d seconds ago", value);
-            } else {
-                return "Just now";
-            }
-    }
-    return "";
+	switch valueType {
+	case YearsAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d years ago", value)
+		} else {
+			return "Last year"
+		}
+	case MonthsAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d months ago", value)
+		} else {
+			return "Last month"
+		}
+	case WeeksAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d weeks ago", value)
+		} else {
+			return "Last week"
+		}
+	case DaysAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d days ago", value)
+		} else {
+			return "Yesterday"
+		}
+	case HoursAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d hours ago", value)
+		} else {
+			return "An hour ago"
+		}
+	case MinutesAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d minutes ago", value)
+		} else {
+			return "A minute ago"
+		}
+	case SecondsAgo:
+		if value >= 2 {
+			return fmt.Sprintf("%d seconds ago", value)
+		} else {
+			return "Just now"
+		}
+	}
+	return ""
 }

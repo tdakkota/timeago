@@ -1,60 +1,59 @@
 package timeago
 
 import (
+	"testing"
 	"time"
 )
 
-import "testing"
-
 func check(t *testing.T, d time.Duration, result string) {
-  start := time.Now()
-  end := time.Now().Add(d)
-  got, error := TimeAgoWithTime(start, end)
-	if error == nil {
-	  if got != result {
-	    t.Errorf("Wrong result: %s", got)
-	  }
+	start := time.Now()
+	end := time.Now().Add(d)
+	got, err := TimeAgoWithTime(start, end)
+	if err == nil {
+		if got != result {
+			t.Errorf("Wrong result: %s", got)
+		}
 	}
 }
 
 func TestThreeHoursAgo(t *testing.T) {
-  d, error := time.ParseDuration("-3h")
-  if error == nil {
-    check(t, d, "3 hours ago")
-  }
+	d, err := time.ParseDuration("-3h")
+	if err == nil {
+		check(t, d, "3 hours ago")
+	}
 }
 
 func TestAnHourAgo(t *testing.T) {
-  d, error := time.ParseDuration("-1.5h")
-  if error == nil {
-    check(t, d, "An hour ago")
-  }
+	d, err := time.ParseDuration("-1.5h")
+	if err == nil {
+		check(t, d, "An hour ago")
+	}
 }
 
 func TestThreeMinutesAgo(t *testing.T) {
-  d, error := time.ParseDuration("-3m")
-  if error == nil {
-    check(t, d, "3 minutes ago")
-  }
+	d, err := time.ParseDuration("-3m")
+	if err == nil {
+		check(t, d, "3 minutes ago")
+	}
 }
 
 func TestAMinuteAgo(t *testing.T) {
-  d, error := time.ParseDuration("-1.2m")
-  if error == nil {
-    check(t, d, "A minute ago")
-  }
+	d, err := time.ParseDuration("-1.2m")
+	if err == nil {
+		check(t, d, "A minute ago")
+	}
 }
 
 func TestJustNow(t *testing.T) {
-  d, error := time.ParseDuration("-1.2s")
-  if error == nil {
-    check(t, d, "Just now")
-  }
+	d, err := time.ParseDuration("-1.2s")
+	if err == nil {
+		check(t, d, "Just now")
+	}
 }
 
 func TestFromNow(t *testing.T) {
-	d, error := time.ParseDuration("-1.2m")
-	if error == nil {
+	d, err := time.ParseDuration("-1.2m")
+	if err == nil {
 		end := time.Now().Add(d)
 		got, err := TimeAgoFromNowWithTime(end)
 		if err == nil {
@@ -66,8 +65,8 @@ func TestFromNow(t *testing.T) {
 }
 
 func TestFromNowWithString(t *testing.T) {
-	d, error := time.ParseDuration("-1.2m")
-	if error == nil {
+	d, err := time.ParseDuration("-1.2m")
+	if err == nil {
 		end := time.Now().Add(d)
 		got, err := TimeAgoFromNowWithString(time.RFC3339, end.Format(time.RFC3339))
 		if err == nil {
